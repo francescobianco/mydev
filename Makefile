@@ -1,5 +1,5 @@
 
 push:
 	git add .
-	git commit -am "Deploy"
+	git commit -am "Deploy" || true
 	git push
