@@ -26,4 +26,6 @@ function mydev_login_host() {
   rm -fr "/tmp/mydev-${user}" >/dev/null 2>&1 || true
   echo -n "${password}" | xclip -selection clipboard
   git clone "https://${host}/${user}/${user}.git" "/tmp/mydev-${user}"
+  cd "/tmp/mydev-${user}" || exit 1
+  git push
 }
