@@ -1,4 +1,57 @@
 
+module hosts
+module proc
+module login
+
 main() {
-  echo "Hello World!"
+  local list
+
+    while [ $# -gt 0 ]; do
+      case "$1" in
+        -*)
+          case "$1" in
+            --list)
+              list=true
+              shift
+              ;;
+            -o|--output)
+              echo "Handling $1 with value: $2"
+              shift
+              ;;
+            *)
+              echo "Unknown option: $1" >&2
+              exit 1
+              ;;
+        esac
+          ;;
+        *)
+          break
+          ;;
+      esac
+      shift
+    done || true
+
+    if [ -n "$MY_HOSTS" ]; then
+      hosts=$MY_HOSTS
+    else
+      hosts=$HOME/.hosts
+    fi
+
+    if [ -n "$list" ]; then
+      my_print_list "$hosts"
+      exit
+    fi
+
+    if [ "$#" -eq 0 ]; then
+      echo "No arguments supplied"
+    fi
+
+    case "$1" in
+      ps)
+        mydev_proc_ps
+        ;;
+      login)
+        mydev_login_host "$hosts" "$2"
+        ;;
+    esac
 }
