@@ -13,7 +13,7 @@ mydev_proc_ps() {
     pid=$(lsof -i ":$port" -t 2>/dev/null | head -1)
     if [ -n "$pid" ]; then
       command=$(ps -p "$pid" -o cmd --no-headers 2>/dev/null && true)
-      echo ":$port ($pid) ${command:0:50}"
+      echo ":$port ($pid) ${command:0:80}"
     fi
   done && true
 }
